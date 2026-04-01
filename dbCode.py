@@ -72,7 +72,7 @@ def get_all_studios():
     return execute_query(query)
 
 # Function to add a new movie
-# Claude assisted in generating this code (and debugging my first version)
+# Claude assisted in generating this code
 def add_movie(title, year, genre, director_id, studio_id):
     """Insert a new movie into the Movies table."""
     return execute_update("""
@@ -80,3 +80,9 @@ def add_movie(title, year, genre, director_id, studio_id):
         VALUES (%s, %s, %s, %s, %s)
     """, (title, year, genre, director_id, studio_id))
 
+# Function to delete movies
+# Claude used to debug my initial version
+def delete_movie(movie_title):
+    return execute_update("""
+        DELETE FROM Movies WHERE Title = %s
+    """, (movie_title,))
