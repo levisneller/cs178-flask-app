@@ -52,7 +52,7 @@ def delete_movie_route():
         title = request.form['title']
         success = delete_movie(title)
         if success:
-            flash('Movie deleted successfully!', 'warning')
+            flash(f'"{title}" deleted successfully!', 'warning')
         else:
             flash('Failed to delete movie.', 'error')
         return redirect(url_for('home'))
