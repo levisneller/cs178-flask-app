@@ -31,8 +31,8 @@ def get_all_movies():
             CONCAT(d.FirstName, ' ', d.LastName) AS Director,
             s.StudioName
         FROM Movies m
-        JOIN DIRECTORS d on m.DirectorID = d.DirectorID
-        JOIN STUDIOS s ON m.StudioID = s.StudioID
+        JOIN Directors d on m.DirectorID = d.DirectorID
+        JOIN Studios s ON m.StudioID = s.StudioID
         ORDER BY m.ReleaseYear DESC
     """
     return execute_query(query)
