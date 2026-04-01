@@ -1,0 +1,67 @@
+ <!-- Claude was used to help format this html file -->
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Update Film</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h2 class="mt-5">Update a Film</h2>
+    <a href="/" class="btn btn-secondary mb-3">Home</a>
+
+    <!-- Step 1: search box -->
+    <form action="{{ url_for('update_movie_route') }}" method="post">
+        <div class="form-group">
+            <label>Enter Movie Title to update</label>
+            <input type="text" name="title" class="form-control" required>
+        </div>
+        <button type="submit" name="lookup" value="1" class="btn btn-primary">Look Up</button>
+    </form>
+
+    <!-- Step 2: edit form, only shows after lookup -->
+    {% if movie %}
+    <hr>
+    <h4>Editing: {{ movie.Title }}</h4>
+    <form action="{{ url_for('update_movie_route') }}" method="post">
+        <input type="hidden" name="movie_id" value="{{ movie.MovieID }}">
+        <div class="form-group">
+            <label>Title</label>
+            <input type="text" name="title" class="form-control" value="{{ movie.Title }}" required>
+        </div>
+        <div class="form-group">
+            <label>Release Year</label>
+            <input type="number" name="year" class="form-control" value="{{ movie.ReleaseYear }}" required>
+        </div>
+        <div class="form-group">
+            <label>Genre</label>
+            <input type="text" name="genre" class="form-control" value="{{ movie.Genre }}" required>
+        </div>
+        <div class="form-group">
+            <label>Director</label>
+            <select name="director_id" class="form-control">
+                {% for d in directors %}
+                <option value="{{ d.DirectorID }}" 
+                    {% if d.DirectorID == movie.DirectorID %}selected{% endif %}>
+                    {{ d.Director }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Studio</label>
+            <select name="studio_id" class="form-control">
+                {% for s in studios %}
+                <option value="{{ s.StudioID }}"
+                    {% if s.StudioID == movie.StudioID %}selected{% endif %}>
+                    {{ s.StudioName }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-warning">Update Movie</button>
+    </form>
+    {% endif %}
+</div>
+</body>
+</html>

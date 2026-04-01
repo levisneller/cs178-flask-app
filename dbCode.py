@@ -81,8 +81,28 @@ def add_movie(title, year, genre, director_id, studio_id):
     """, (title, year, genre, director_id, studio_id))
 
 # Function to delete movies
-# Claude used to debug my initial version
+# Claude was used to debug my initial version
 def delete_movie(movie_title):
     return execute_update("""
         DELETE FROM Movies WHERE Title = %s
     """, (movie_title,))
+
+# Function to look up a movie from a title (used for updating a movie)
+# Claude was used to debug my initial version
+def get_movie_by_title(title):
+    query = """
+        SELECT m.MovieID, m.Title, m.ReleaseYear, m.Genre,
+               m.DirectorID, m.StudioID
+        FROM Movies m
+        WHERE m.Title = %s
+    """
+    return execute_query(query, (title,))
+
+# Function to update movie
+# Claude assisted with generating this code
+def update_movie(movie_id, title, year, genre, director_id, studio_id):
+    return execute_update("""
+        UPDATE Movies
+        SET Title=%s, ReleaseYear=%s, Genre=%s, DirectorID=%s, StudioID=%s
+        WHERE MovieID=%s
+    """, (title, year, genre, director_id, studio_id, movie_id))

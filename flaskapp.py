@@ -60,6 +60,7 @@ def delete_movie_route():
         # Render the form page if the request method is GET
         return render_template('delete_movie.html')
 
+# Code to siplay movies
 @app.route('/display-movies')
 def browse():
     # Calude was used to help implement try/except to handle errors
@@ -69,6 +70,37 @@ def browse():
         flash(f'Error loading movies: {e}', 'error')
         movies = []
     return render_template('display_movies.html', movies=movies)
+
+# Code to update movie attributes
+# Claude helped generate this code
+@app.route('/update-movie', methods=['GET', 'POST'])
+def update_movie_route():
+    directors = get_all_directors()
+    studios = get_all_studios()
+    movie = None
+    if request.method == 'POST':
+        if 'lookup' in request.form:
+            # Step 1: look up movie by title
+            title = request.form['title']
+            results = get_movie_by_title(title)
+            movie = results[0] if results else None
+            if not movie:
+                flash('Movie not found.', 'error')
+        else:
+            # Step 2: save the update
+            movie_id = request.form['movie_id']
+            title = request.form['title']
+            year = request.form['year']
+            genre = request.form['genre']
+            director_id = request.form['director_id']
+            studio_id = request.form['studio_id']
+            success = update_movie(movie_id, title, year, genre, director_id, studio_id)
+            if success:
+                flash(f'"{title}" updated successfully!', 'success')
+            else:
+                flash('Update failed.', 'error')
+            return redirect(url_for('home'))
+    return render_template('update_movie.html', directors=directors, studios=studios, movie=movie)
 
 
 # these two lines of code should always be the last in the file
