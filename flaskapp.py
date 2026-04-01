@@ -39,7 +39,7 @@ def add_movie_route():
             flash('Failed to add movie.', 'error')
         
         # Redirect to display movies page
-        return redirect(url_for('browse'))
+        return redirect(url_for('home'))
     else:
         # Render the form page if the request method is GET
         return render_template('add_movie.html', directors=directors, studios=studios)
