@@ -1,6 +1,7 @@
-# author: T. Urness and M. Moore
+# Original template authors: T. Urness and M. Moore
 # description: Flask example using redirect, url_for, and flash
 # credit: the template html files were constructed with the help of ChatGPT
+# New Author: Levi Sneller
 
 from flask import Flask
 from flask import render_template
@@ -51,13 +52,15 @@ def delete_user():
         # Render the form page if the request method is GET
         return render_template('delete_user.html')
 
-
-@app.route('/display-users')
-def display_users():
-    # hard code a value to the users_list;
-    # note that this could have been a result from an SQL query :) 
-    users_list = (('John','Doe','Comedy'),('Jane', 'Doe','Drama'))
-    return render_template('display_users.html', users = users_list)
+@app.route('/display-movies')
+def browse():
+    # Calude was used to help implement try/except to handle errors
+    try:
+        movies = get_all_movies()
+    except Exception as e:
+        flash(f'Error loading movies: {e}', 'error')
+        movies = []
+    return render_template('display_movies.html', movies=movies)
 
 
 # these two lines of code should always be the last in the file
