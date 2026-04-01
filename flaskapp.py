@@ -16,25 +16,35 @@ app.secret_key = 'your_secret_key' # this is an artifact for using flash display
 def home():
     return render_template('home.html')
 
-@app.route('/add-user', methods=['GET', 'POST'])
-def add_user():
+# add movie code
+# Claude assisted in debugging my initial version
+@app.route('/add-movie', methods=['GET', 'POST'])
+def add_movie_route():
+    directors = get_all_directors()
+    studios = get_all_studios()
     if request.method == 'POST':
         # Extract form data
-        f_name = request.form['f_name']
-        l_name = request.form['l_name']
+        title = request.form['title']
+        year = request.form['year']
         genre = request.form['genre']
+        director_id = request.form['director_id']
+        studio_id = request.form['studio_id']
         
-        # Process the data (e.g., add it to a database)
-        # For now, let's just print it to the console
-        print("Name:", f_name + " " + l_name, ":", "Favorite Genre:", genre)
+        # Add movie to the database
+        success = add_movie(title, year, genre, director_id, studio_id)
         
-        flash('User added successfully! Huzzah!', 'success')  # 'success' is a category; makes a green banner at the top
-        # Redirect to home page or another page upon successful submission
-        return redirect(url_for('home'))
+        if success:
+            flash(f'"{title}" added successfully!', 'success')
+        else:
+            flash('Failed to add movie.', 'error')
+        
+        # Redirect to display movies page
+        return redirect(url_for('browse'))
     else:
         # Render the form page if the request method is GET
-        return render_template('add_user.html')
+        return render_template('add_movie.html', directors=directors, studios=studios)
 
+# Need to update
 @app.route('/delete-user',methods=['GET', 'POST'])
 def delete_user():
     if request.method == 'POST':

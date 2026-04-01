@@ -1,17 +1,37 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Add New User</title>
+    <title>Add New Movie</title>
   </head>
   <body>
-    <h1>Add New User</h1>
-    <form action="{{ url_for('add_user') }}" method="post">
-      <label for="name">First Name:</label><br />
-      <input type="text" id="f_name" name="f_name" required /><br />
-      <label for="name">Last Name:</label><br />
-      <input type="text" id="l_name" name="l_name" required /><br />
-      <label for="genre">Favorite Genre:</label><br />
+    <h1>Add New Movie</h1>
+    <form action="{{ url_for('add_movie_route') }}" method="post">
+
+      <label for="title">Title:</label><br />
+      <input type="text" id="title" name="title" required /><br />
+
+      <label for="year">Release Year:</label><br />
+      <input type="number" id="year" name="year" required /><br />
+      
+      <label for="genre">Genre:</label><br />
       <input type="text" id="genre" name="genre" required /><br />
+      
+      <!-- replace text inputs with dropdowns -->
+      <!-- Claude assisted with generating HTML dropdown code -->
+      <label for="director_id">Director:</label><br />
+      <select id="director_id" name="director_id">
+        {% for d in directors %}
+        <option value="{{ d.DirectorID }}">{{ d.Director }}</option>
+        {% endfor %}
+      </select><br />
+      
+      <label for="studio_id">Studio:</label><br />
+      <select id="studio_id" name="studio_id">
+        {% for s in studios %}
+        <option value="{{ s.StudioID }}">{{ s.StudioName }}</option>
+        {% endfor %}
+      </select><br />
+
       <input type="submit" value="Submit" />
     </form>
   </body>
