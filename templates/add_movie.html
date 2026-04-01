@@ -5,36 +5,38 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   </head>
   <body>
-    <h1>Add New Movie</h1>
-    <a href="/" class="btn btn-secondary mb-3">Home</a>
-    <form action="{{ url_for('add_movie_route') }}" method="post">
+    <div class="container">
+      <h1 class="mt-5">Add New Movie</h1>
+      <a href="/" class="btn btn-secondary mb-3">Home</a>
+      <form action="{{ url_for('add_movie_route') }}" method="post">
 
-      <label for="title">Title:</label><br />
-      <input type="text" id="title" name="title" required /><br />
+        <label for="title">Title:</label><br />
+        <input type="text" id="title" name="title" required /><br />
 
-      <label for="year">Release Year:</label><br />
-      <input type="number" id="year" name="year" required /><br />
-      
-      <label for="genre">Genre:</label><br />
-      <input type="text" id="genre" name="genre" required /><br />
-      
-      <!-- replace text inputs with dropdowns -->
-      <!-- Claude assisted with generating HTML dropdown code -->
-      <label for="director_id">Director:</label><br />
-      <select id="director_id" name="director_id">
-        {% for d in directors %}
-        <option value="{{ d.DirectorID }}">{{ d.Director }}</option>
-        {% endfor %}
-      </select><br />
-      
-      <label for="studio_id">Studio:</label><br />
-      <select id="studio_id" name="studio_id">
-        {% for s in studios %}
-        <option value="{{ s.StudioID }}">{{ s.StudioName }}</option>
-        {% endfor %}
-      </select><br />
+        <label for="year">Release Year:</label><br />
+        <input type="number" id="year" name="year" required /><br />
+        
+        <label for="genre">Genre:</label><br />
+        <input type="text" id="genre" name="genre" required /><br />
+        
+        <!-- replace text inputs with dropdowns -->
+        <!-- Claude assisted with generating HTML dropdown code -->
+        <label for="director_id">Director:</label><br />
+        <select id="director_id" name="director_id">
+          {% for d in directors %}
+          <option value="{{ d.DirectorID }}">{{ d.Director }}</option>
+          {% endfor %}
+        </select><br />
+        
+        <label for="studio_id">Studio:</label><br />
+        <select id="studio_id" name="studio_id">
+          {% for s in studios %}
+          <option value="{{ s.StudioID }}">{{ s.StudioName }}</option>
+          {% endfor %}
+        </select><br />
 
-      <input type="submit" value="Submit" />
-    </form>
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
   </body>
 </html>
