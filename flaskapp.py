@@ -110,6 +110,9 @@ def rate_movie():
     if request.method == 'POST':
         title = request.form['title']
         rating = request.form['rating']
+        if rating < 0 or rating > 100:
+            flash('Rating must be between 0 and 100.', 'error')
+            return redirect(url_for('rate_movie'))
         success = add_rating(title, rating)
         if success:
             flash(f'Rating added for "{title}"!', 'success')
