@@ -7,6 +7,7 @@ from flask import Flask
 from flask import render_template
 from flask import Flask, render_template, request, redirect, url_for, flash
 from dbCode import *
+from dynamoCode import *
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key' # this is an artifact for using flash displays; 
@@ -102,6 +103,28 @@ def update_movie_route():
             return redirect(url_for('home'))
     return render_template('update_movie.html', directors=directors, studios=studios, movie=movie)
 
+# Claude used to debug my initial attempt
+@app.route('/rate-movie', methods=['GET', 'POST'])
+def rate_movie():
+    if request.method == 'POST':
+        title = request.form['title']
+        rating = request.form['rating']
+        success = add_rating(title, rating)
+        if success:
+            flash(f'Rating added for "{title}"!', 'success')
+        else:
+            flash('Failed to add rating.', 'error')
+        return redirect(url_for('home'))
+    return render_template('add_ratings.html')
+
+@app.route('/view-ratings')
+def view_ratings():
+    try:
+        movies = get_all_ratings()
+    except Exception as e:
+        flash(f'Error loading ratings: {e}', 'error')
+        movies = []
+    return render_template('get_ratings.html', movies=movies)
 
 # these two lines of code should always be the last in the file
 if __name__ == '__main__':

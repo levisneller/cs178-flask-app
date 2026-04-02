@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Movie Ratings</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h2 class="mt-5">Movie Ratings</h2>
+        <a href="/" class="btn btn-secondary mb-3">Home</a>
+        <table class="table table-bordered table-striped mt-3">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Title</th>
+                    <th>Ratings</th>
+                    <th>Average</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for movie in movies %}
+                <tr>
+                    <td>{{ movie.Title }}</td>
+                    <td>{{ movie.Ratings }}</td>
+                    <td>
+                        <!-- Claude used to help calculate average rating -->
+                        {% if movie.Ratings %}
+                            {{ (movie.Ratings | sum / movie.Ratings | length) | round(1) }}
+                        {% else %}
+                            No ratings
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
