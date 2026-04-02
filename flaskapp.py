@@ -1,6 +1,6 @@
 # Original template authors: T. Urness and M. Moore
 # description: Flask example using redirect, url_for, and flash
-# credit: the template html files were constructed with the help of ChatGPT
+# credit: the original template html files were constructed with the help of ChatGPT
 # New Author: Levi Sneller
 
 from flask import Flask
@@ -17,7 +17,7 @@ app.secret_key = 'your_secret_key' # this is an artifact for using flash display
 def home():
     return render_template('home.html')
 
-# add movie code
+# Code to add a movie (SQL)
 # Claude assisted in debugging my initial version
 @app.route('/add-movie', methods=['GET', 'POST'])
 def add_movie_route():
@@ -45,7 +45,7 @@ def add_movie_route():
         # Render the form page if the request method is GET
         return render_template('add_movie.html', directors=directors, studios=studios)
 
-# Code to delete a movie (based on original code and flash code above)
+# Code to delete a movie - based on original code and flash code above (SQL)
 @app.route('/delete-movie',methods=['GET', 'POST'])
 def delete_movie_route():
     if request.method == 'POST':
@@ -61,10 +61,10 @@ def delete_movie_route():
         # Render the form page if the request method is GET
         return render_template('delete_movie.html')
 
-# Code to siplay movies
+# Code to display movies (SQL)
 @app.route('/display-movies')
 def browse():
-    # Calude was used to help implement try/except to handle errors
+    # Claude was used to help implement try/except to handle errors
     try:
         movies = get_all_movies()
     except Exception as e:
@@ -72,7 +72,7 @@ def browse():
         movies = []
     return render_template('display_movies.html', movies=movies)
 
-# Code to update movie attributes
+# Code to update movie attributes (SQL)
 # Claude helped generate this code
 @app.route('/update-movie', methods=['GET', 'POST'])
 def update_movie_route():
@@ -103,6 +103,7 @@ def update_movie_route():
             return redirect(url_for('home'))
     return render_template('update_movie.html', directors=directors, studios=studios, movie=movie)
 
+# Code to rate a movie (noSQL)
 # Claude used to debug my initial attempt
 @app.route('/rate-movie', methods=['GET', 'POST'])
 def rate_movie():
@@ -117,6 +118,7 @@ def rate_movie():
         return redirect(url_for('home'))
     return render_template('add_ratings.html')
 
+# Code to view ratings (noSQL)
 @app.route('/view-ratings')
 def view_ratings():
     try:
