@@ -20,7 +20,7 @@
                 {% for movie in movies %}
                 <tr>
                     <td>{{ movie.Title }}</td>
-                    <td>{{ movie.Ratings }}</td>
+                    <td>{{ movie.Ratings | map('int') | list | join(', ') }}</td>
                     <td>
                         <!-- Claude used to help calculate average rating -->
                         {% if movie.Ratings %}
