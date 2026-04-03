@@ -28,7 +28,7 @@ def execute_query(query, args=()):
         print(f"[DB ERROR - execute_query]: {e}")
         return []
 
-# Function to execute updata (used in add_movie)
+# Function to execute update (used in add_movie)
 # Claude assisted in generating this code
 def execute_update(query, args=()):
     """Executes INSERT, UPDATE, or DELETE queries."""
